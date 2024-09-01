@@ -12,6 +12,7 @@ export class Boot extends Scene {
   }
 
   create() {
+    console.log("start Boot");
     this.scene.start("Preloader");
   }
 }
