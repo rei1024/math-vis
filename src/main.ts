@@ -1,5 +1,6 @@
 import { Color } from "./lib/color";
 import { Boot } from "./scenes/Boot";
+import { InitScene } from "./scenes/InitScene";
 import { MatrixScene } from "./scenes/MatrixScene";
 import { Preloader } from "./scenes/Preloader";
 
@@ -17,7 +18,7 @@ const config: Types.Core.GameConfig = {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
-  scene: [Boot, Preloader, MatrixScene],
+  scene: [Boot, Preloader, InitScene, MatrixScene],
 };
 
 export default new Game(config);

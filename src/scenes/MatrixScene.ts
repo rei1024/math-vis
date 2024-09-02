@@ -1,6 +1,6 @@
 import { Scene } from "phaser";
-import { Grid } from "../lib/ui/Grid";
-import { PointObject } from "../lib/ui/PointObject";
+import { Grid, mathToWorldView } from "../lib/ui/Grid";
+import { PointObject, toArray } from "../lib/ui/PointObject";
 import { setupPanZoom } from "../lib/pan-zoom";
 import { Color } from "../lib/color";
 
@@ -14,12 +14,23 @@ export class MatrixScene extends Scene {
   private point2!: PointObject;
   private pointInput!: PointObject;
   private pointOutput!: PointObject;
+
+  private text!: Phaser.GameObjects.Text;
+
+  private rect!: Phaser.GameObjects.Graphics;
   constructor() {
     super("MatrixScene");
   }
 
   create() {
     console.log("start MatrixScene");
+
+    this.text = this.add.text(-300, -300, "Test", {
+      color: "#000000",
+      fontSize: "64px",
+    });
+    this.text.setOrigin(0.5, 0.5);
+    this.text.scale = 0.5;
 
     this.grid.create();
     this.point1 = new PointObject(
@@ -41,8 +52,10 @@ export class MatrixScene extends Scene {
     this.pointOutput = new PointObject(
       this,
       { x: 1, y: 1 },
-      { color: Color.SLATE_500 }
+      { color: Color.SLATE_300 }
     );
+
+    this.rect = this.add.graphics();
 
     // カメラの設定
     const camera = this.cameras.main;
@@ -64,11 +77,47 @@ export class MatrixScene extends Scene {
   update(time: number, delta: number): void {
     this.grid.update();
 
+    const matrix = this.getMatrix();
+    const pointInput = this.pointInput.getPosition();
+    this.pointOutput.setPosition(pointInput.transformMat3(matrix));
+
+    {
+      const rect = this.rect;
+      rect.clear();
+      rect.beginPath();
+      rect.moveTo(0, 0); // 最初の点に移動
+      rect.lineTo(...toArray(mathToWorldView(this.point1.getPosition())));
+      const diagPoint = mathToWorldView(
+        this.point1.getPosition().add(this.point2.getPosition())
+      );
+      rect.lineTo(...toArray(diagPoint));
+      rect.lineTo(...toArray(mathToWorldView(this.point2.getPosition())));
+      rect.lineTo(0, 0);
+      rect.closePath(); // 最初の点に戻り、形を閉じる
+
+      // 四角形を塗りつぶす場合は次の行を追加
+      rect.fillStyle(0xff0000, 0.3); // 塗りつぶしの色と透明度を設定
+      rect.fillPath(); // 四角形を塗りつぶす
+
+      // 0 1 2
+      // 3 4 5
+      // 6 7 8
+    }
+
+    function f(v: number): string {
+      return v.toFixed(2).padStart(5, " ");
+    }
+
+    this.text.text =
+      `⎧${f(matrix.val[0])} ${f(matrix.val[1])}⎫` +
+      "\n" +
+      `⎩${f(matrix.val[3])} ${f(matrix.val[4])}⎭`;
+  }
+
+  private getMatrix() {
     const matrix = new Phaser.Math.Matrix3();
-    matrix.identity();
     const point1Pos = this.point1.getPosition();
     const point2Pos = this.point2.getPosition();
-    const point3Pos = this.pointInput.getPosition();
 
     matrix.fromArray([
       // x
@@ -84,6 +133,6 @@ export class MatrixScene extends Scene {
       0,
       1,
     ]);
-    this.pointOutput.setPosition(point3Pos.transformMat3(matrix));
+    return matrix;
   }
 }

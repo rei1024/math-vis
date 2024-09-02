@@ -6,4 +6,5 @@ export const Color = {
   CYAN_200: "#a5f3fc",
   RED_200: "#fecaca",
   SLATE_500: "#64748b",
+  SLATE_300: "#cbd5e1",
 };

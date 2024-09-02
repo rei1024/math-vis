@@ -57,3 +57,7 @@ export class PointObject {
     return this.isDown;
   }
 }
+
+export function toArray({ x, y }: { x: number; y: number }): [number, number] {
+  return [x, y];
+}
