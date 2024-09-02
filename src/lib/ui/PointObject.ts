@@ -21,7 +21,6 @@ export class PointObject {
     if (draggable) {
       circle.setInteractive();
       circle.on("pointerdown", () => {
-        console.log("down");
         this.isDown = true;
       });
       scene.input.on("pointerup", () => {
@@ -29,7 +28,6 @@ export class PointObject {
       });
       scene.input.on("pointermove", (pointer: any) => {
         if (this.isDown) {
-          console.log("move");
           const worldPoint = scene.cameras.main.getWorldPoint(
             pointer.x,
             pointer.y
