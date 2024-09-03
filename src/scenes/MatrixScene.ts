@@ -3,6 +3,7 @@ import { Grid, mathToWorldView } from "../lib/ui/Grid";
 import { PointObject, toArray } from "../lib/ui/PointObject";
 import { setupPanZoom } from "../lib/pan-zoom";
 import { Color } from "../lib/color";
+import { eigen } from "../lib/eigen";
 
 /**
  * 行列による線形変換
@@ -16,6 +17,9 @@ export class MatrixScene extends Scene {
   private pointOutput!: PointObject;
 
   private text!: Phaser.GameObjects.Text;
+
+  private eigenvector1!: Phaser.GameObjects.Line;
+  private eigenvector2!: Phaser.GameObjects.Line;
 
   private rect!: Phaser.GameObjects.Graphics;
   constructor() {
@@ -54,6 +58,9 @@ export class MatrixScene extends Scene {
       { x: 1, y: 1 },
       { color: Color.SLATE_300 }
     );
+
+    this.eigenvector1 = this.add.line(0, 0, 0, 0, 0, 0, 0xff0000);
+    this.eigenvector2 = this.add.line(0, 0, 0, 0, 0, 0, 0xff0000);
 
     this.rect = this.add.graphics();
 
@@ -112,6 +119,31 @@ export class MatrixScene extends Scene {
       `⎧${f(matrix.val[0])} ${f(matrix.val[1])}⎫` +
       "\n" +
       `⎩${f(matrix.val[3])} ${f(matrix.val[4])}⎭`;
+
+    try {
+      this.eigenvector1.visible = true;
+      this.eigenvector2.visible = true;
+      const [v1, v2] = eigen(
+        matrix.val[0],
+        matrix.val[1],
+        matrix.val[3],
+        matrix.val[4]
+      );
+
+      this.eigenvector1.setTo(
+        0,
+        0,
+        ...toArray(mathToWorldView(v1.eigenvector))
+      );
+      this.eigenvector2.setTo(
+        0,
+        0,
+        ...toArray(mathToWorldView(v2.eigenvector))
+      );
+    } catch (error) {
+      this.eigenvector1.visible = false;
+      this.eigenvector2.visible = false;
+    }
   }
 
   private getMatrix() {
