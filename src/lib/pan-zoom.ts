@@ -6,7 +6,7 @@ import { calcScaleDiff } from "./calcScaleDiff";
  */
 export function setupPanZoom(
   scene: Scene,
-  { isPanDisabled }: { isPanDisabled: () => boolean }
+  { isPanDisabled }: { isPanDisabled: () => boolean },
 ) {
   const camera = scene.cameras.main;
   // ドラッグでのパン操作を有効化
@@ -43,6 +43,6 @@ export function setupPanZoom(
       // カメラのスクロール位置を調整
       camera.scrollX += worldPoint.x - newWorldPoint.x;
       camera.scrollY += worldPoint.y - newWorldPoint.y;
-    }
+    },
   );
 }

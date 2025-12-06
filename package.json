@@ -16,15 +16,16 @@
   "homepage": "https://github.com/phaserjs/template-vite-ts#readme",
   "scripts": {
     "dev": "vite --config vite/config.dev.mjs",
-    "build": "vite build --config vite/config.prod.mjs"
+    "build": "vite build --config vite/config.prod.mjs",
+    "fmt": "prettier --write ."
   },
   "devDependencies": {
-    "terser": "^5.42.0",
-    "typescript": "^5.7.3",
-    "vite": "^6.3.5"
+    "terser": "^5.44.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.6"
   },
   "dependencies": {
     "phaser": "^3.90.0",
-    "prettier": "^3.5.3"
+    "prettier": "^3.7.4"
   }
 }

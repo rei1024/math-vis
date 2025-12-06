@@ -43,7 +43,7 @@ export class Grid {
 
     const LEVEL_BASE = 5;
     const LEVEL = Math.floor(
-      Math.log(view.width / 1080) / Math.log(LEVEL_BASE)
+      Math.log(view.width / 1080) / Math.log(LEVEL_BASE),
     );
 
     const UNIT = LEVEL_BASE ** LEVEL * WORLD_MATH_RATIO;
@@ -61,7 +61,7 @@ export class Grid {
           view.top - OFFSET,
           STROKE_WIDTH,
           view.height + OFFSET,
-          COLOR
+          COLOR,
         )
         .setOrigin(0.5, 0);
       this.container.add(rect);
@@ -74,7 +74,7 @@ export class Grid {
         {
           color: "#000000",
           fontSize: `${FONT_SIZE}px`,
-        }
+        },
       );
       // fontSizeは変更すると画質が変化するのでscaleで変更
       t.scale = LEVEL_BASE ** LEVEL / 2;
@@ -91,7 +91,7 @@ export class Grid {
           y,
           view.width + OFFSET,
           STROKE_WIDTH,
-          COLOR
+          COLOR,
         )
         .setOrigin(0, 0.5);
       this.container.add(rect);
@@ -104,7 +104,7 @@ export class Grid {
           {
             color: "#000000",
             fontSize: `${FONT_SIZE}px`,
-          }
+          },
         );
         this.container.add(t);
         t.scale = LEVEL_BASE ** LEVEL / 2;

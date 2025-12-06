@@ -36,23 +36,23 @@ export class MatrixScene extends Scene {
     this.point1 = new PointObject(
       this,
       { x: 1, y: 0 },
-      { draggable: true, color: Color.CYAN_200 }
+      { draggable: true, color: Color.CYAN_200 },
     );
     this.point2 = new PointObject(
       this,
       { x: 0, y: 1 },
-      { draggable: true, color: Color.CYAN_200 }
+      { draggable: true, color: Color.CYAN_200 },
     );
     this.pointInput = new PointObject(
       this,
       { x: 1, y: 1 },
-      { draggable: true, color: Color.RED_200 }
+      { draggable: true, color: Color.RED_200 },
     );
 
     this.pointOutput = new PointObject(
       this,
       { x: 1, y: 1 },
-      { color: Color.SLATE_300 }
+      { color: Color.SLATE_300 },
     );
 
     this.rect = this.add.graphics();
@@ -88,7 +88,7 @@ export class MatrixScene extends Scene {
       rect.moveTo(0, 0); // 最初の点に移動
       rect.lineTo(...toArray(mathToWorldView(this.point1.getPosition())));
       const diagPoint = mathToWorldView(
-        this.point1.getPosition().add(this.point2.getPosition())
+        this.point1.getPosition().add(this.point2.getPosition()),
       );
       rect.lineTo(...toArray(diagPoint));
       rect.lineTo(...toArray(mathToWorldView(this.point2.getPosition())));

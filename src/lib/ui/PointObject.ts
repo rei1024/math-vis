@@ -14,7 +14,7 @@ export class PointObject {
     }: {
       draggable?: boolean;
       color: string;
-    }
+    },
   ) {
     const { x, y } = mathToWorldView(mathPoint);
     const circle = scene.add.circle(x, y, 20, hex(color));
@@ -30,7 +30,7 @@ export class PointObject {
         if (this.isDown) {
           const worldPoint = scene.cameras.main.getWorldPoint(
             pointer.x,
-            pointer.y
+            pointer.y,
           );
           circle.x = worldPoint.x;
           circle.y = worldPoint.y;
