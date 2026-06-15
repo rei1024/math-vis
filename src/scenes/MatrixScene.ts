@@ -1,4 +1,4 @@
-import { Scene } from "phaser";
+import Phaser, { Scene } from "phaser";
 import { Grid, mathToWorldView } from "../lib/ui/Grid";
 import { PointObject, toArray } from "../lib/ui/PointObject";
 import { setupPanZoom } from "../lib/pan-zoom";

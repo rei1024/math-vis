@@ -1,4 +1,4 @@
-import { Scene } from "phaser";
+import Phaser, { Scene } from "phaser";
 import { WORLD_MATH_RATIO } from "../constant";
 
 /**
